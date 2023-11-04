@@ -1,9 +1,8 @@
-console.log("objects");
 $.getJSON("https://api.ipify.org?format=json", function (data) {
   let a = data.ip;
   const ip = document.getElementById("ip");
   ip.innerText = a;
-  // localStorage.setItem("ipAdress", a);
+  localStorage.setItem("ipAdress", a);
 });
 
 const right2 = document.getElementsByClassName("right2")[0];

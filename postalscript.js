@@ -7,6 +7,7 @@ let region;
 let org;
 let pincode;
 let timezone;
+let POSTOFFICE;
 function renderdata(data) {
   ip = data.ip;
   lat = data.latitude;
@@ -81,6 +82,7 @@ function getpostOffice(pincode) {
 }
 
 function showcard(postOffice) {
+  POSTOFFICE = postOffice;
   const cardContainer = document.getElementsByClassName("card-container")[0];
 
   let i = 0;
@@ -121,4 +123,55 @@ function showcard(postOffice) {
   }
 
   console.log(postOffice);
+}
+
+const inbtn = document.getElementsByClassName("button")[0];
+inbtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  cleardata();
+  // console.log(event.target);
+  const input = document.getElementById("input");
+  search(input.value);
+});
+
+function cleardata() {
+  const cardRow = document.getElementsByClassName("card-row");
+  console.log(cardRow);
+  while (cardRow.length > 0) {
+    console.log("removing");
+    cardRow[0].remove();
+  }
+}
+
+function search(value) {
+  const cardContainer = document.getElementsByClassName("card-container")[0];
+  console.log(POSTOFFICE);
+  for (let i = 0; i < POSTOFFICE.length; i++) {
+    if (POSTOFFICE[i].Name == value || POSTOFFICE[i].BranchType == value) {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const name = document.createElement("div");
+      name.innerText = "Name: " + POSTOFFICE[i].Name;
+      card.appendChild(name);
+
+      const branch = document.createElement("div");
+      branch.innerText = "Branch Type: " + POSTOFFICE[i].BranchType;
+      card.appendChild(branch);
+
+      const delivery = document.createElement("div");
+      delivery.innerText = "Delivery Status: " + POSTOFFICE[i].DeliveryStatus;
+      card.appendChild(delivery);
+
+      const distrinct = document.createElement("div");
+      distrinct.innerText = "District: " + POSTOFFICE[i].District;
+      card.appendChild(distrinct);
+
+      const division = document.createElement("div");
+      division.innerText = "Division: " + POSTOFFICE[i].Division;
+      card.appendChild(division);
+
+      cardContainer.appendChild(card);
+    }
+  }
 }
